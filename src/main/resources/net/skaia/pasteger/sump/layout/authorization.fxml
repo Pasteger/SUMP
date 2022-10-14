@@ -8,33 +8,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #c6c6c6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.skaia.pasteger.sump.controller.AuthorizationController">
-   <Label fx:id="titleLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="620.0" text="Система учета закупок и реализации&#10;молочной продукции&#10;магазинами Пензы" textAlignment="CENTER" textFill="#6a006a">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.skaia.pasteger.sump.controller.AuthorizationController">
+   <ImageView fx:id="authorizationDecorImageView1" fitHeight="133.0" fitWidth="138.0" layoutX="14.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/epitrochoid.gif" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="authorizationDecorImageView2" fitHeight="133.0" fitWidth="138.0" layoutX="497.0" layoutY="44.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/epitrochoid.gif" />
+      </image>
+   </ImageView>
+   <Label fx:id="authorizationTitleLabel" alignment="CENTER" layoutX="13.0" prefHeight="133.0" prefWidth="620.0" text="Система учета закупок и реализации&#10;молочной продукции&#10;магазинами Пензы" textAlignment="CENTER" textFill="#8e00ae">
       <font>
-         <Font name="Impact" size="28.0" />
+         <Font name="Arial Bold" size="33.0" />
       </font>
    </Label>
-   <Label fx:id="headLabel" alignment="CENTER" layoutX="10.0" layoutY="119.0" prefHeight="33.0" prefWidth="620.0" text="Авторизация" textAlignment="CENTER" textFill="#0021cb">
+   <Label fx:id="authorizationHeadLabel" alignment="CENTER" layoutX="10.0" layoutY="127.0" prefHeight="33.0" prefWidth="620.0" text="Кто ты?" textAlignment="CENTER" textFill="#355fc9">
       <font>
-         <Font name="Impact" size="25.0" />
+         <Font name="Garamond" size="34.0" />
       </font>
    </Label>
-   <TextField fx:id="loginTextField" alignment="CENTER" focusTraversable="false" layoutX="26.0" layoutY="283.0" prefHeight="50.0" prefWidth="122.0" promptText="Логин" style="-fx-background-color: #0021cb; -fx-border-color: #535353; -fx-text-fill: #eeeeee; -fx-font-family: Impact;">
+   <ImageView fx:id="authorizationDecorImageView0" fitHeight="464.0" fitWidth="467.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/milk.png" />
+      </image>
+   </ImageView>
+   <TextField fx:id="authorizationLoginTextField" alignment="CENTER" focusTraversable="false" layoutX="204.0" layoutY="177.0" prefHeight="50.0" prefWidth="233.0" promptText="Логин" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
       <font>
-         <Font size="25.0" />
+         <Font name="Garamond" size="25.0" />
       </font>
    </TextField>
-   <Button fx:id="registrationButton" alignment="CENTER" layoutX="242.0" layoutY="417.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="159.0" style="-fx-background-color: #c6c6c6; -fx-border-color: #535353;" text="регистрация" textFill="#0021cb">
+   <TextField fx:id="authorizationPasswordTextField" alignment="CENTER" focusTraversable="false" layoutX="169.0" layoutY="240.0" prefHeight="50.0" prefWidth="306.0" promptText="Пароль" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
       <font>
-         <Font name="Impact" size="19.0" />
+         <Font name="Garamond" size="25.0" />
+      </font>
+   </TextField>
+   <Button fx:id="authorizationRegistrationButton" alignment="CENTER" layoutX="470.0" layoutY="424.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="163.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="я новенький" textFill="#355fc9">
+      <font>
+         <Font name="Garamond" size="24.0" />
       </font>
    </Button>
-   <TextField fx:id="passwordTextField" alignment="CENTER" focusTraversable="false" layoutX="193.0" layoutY="350.0" prefHeight="50.0" prefWidth="255.0" promptText="Пароль" style="-fx-background-color: #0021cb; -fx-border-color: #535353; -fx-text-fill: #eeeeee; -fx-font-family: Impact;">
-      <font>
-         <Font size="25.0" />
-      </font>
-   </TextField>
-   <ImageView fx:id="start" fitHeight="118.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true" x="10.0">
+   <ImageView fx:id="authorizationButton" fitHeight="121.0" fitWidth="75.0" layoutX="475.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/skaia.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="start" pickOnBounds="true" preserveRatio="true" visible="false" x="120.0" y="38.0">
       <image>
          <Image url="@../image/scratch_disc.png" />
       </image>

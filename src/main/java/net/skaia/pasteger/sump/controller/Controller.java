@@ -48,6 +48,7 @@ public class Controller {
         Parent root = loader.getRoot();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }
