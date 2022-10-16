@@ -9,40 +9,45 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
+import static net.skaia.pasteger.sump.Constants.*;
+
 public class Controller {
-    final static Stage stage = new Stage();
-    private static final String STRING_FILE_TO_LOGO =
-            "file:src\\main\\resources\\net\\skaia\\pasteger\\sump\\image\\scratch_disc.png";
-    public static void openOtherWindow(String window, Button button){
+    private static Stage stage;
+
+    public static void openOtherWindow(String window, Button button) {
         button.getScene().getWindow().hide();
         openNewWindow(window);
     }
-    public static void openOtherWindow(String window, ImageView imageView){
+
+    public static void openOtherWindow(String window, ImageView imageView) {
         imageView.getScene().getWindow().hide();
         openNewWindow(window);
     }
-    public static void openOtherWindow(String window, Label label){
+
+    public static void openOtherWindow(String window, Label label) {
         label.getScene().getWindow().hide();
         openNewWindow(window);
     }
-    public static void openOtherWindow(String window, TextField textField){
+
+    public static void openOtherWindow(String window, TextField textField) {
         textField.getScene().getWindow().hide();
         openNewWindow(window);
     }
 
-    public static void openNewWindow(String window){
+    public static void openNewWindow(String window) {
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource(window));
         try {
             loader.load();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        setStage(loader);
+        setShowStage(loader);
     }
 
-    public static void setStage(FXMLLoader loader){
+    public static void setShowStage(FXMLLoader loader) {
         stage.setTitle("SUMP");
         stage.getIcons().add(new Image(STRING_FILE_TO_LOGO));
         Parent root = loader.getRoot();
@@ -50,5 +55,13 @@ public class Controller {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public static void setStage(Stage stage) {
+        Controller.stage = stage;
+    }
+
+    public static Stage getStage() {
+        return stage;
     }
 }
