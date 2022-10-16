@@ -18,6 +18,9 @@ public class UIService {
 
     private final DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
+    private Provider provider;
+    private Client client;
+
     public String authorization(String login, String password) {
         try {
             String response = databaseHandler.authorization(login, password);
@@ -32,9 +35,9 @@ public class UIService {
             Long id = Long.parseLong(response.split(":")[1]);
 
             if (entity.equals("provider")) {
-                Provider provider = databaseHandler.getProvider(id);
+                provider = databaseHandler.getProvider(id);
             } else {
-                Client client = databaseHandler.getClient(id);
+                client = databaseHandler.getClient(id);
             }
 
             return entity;
