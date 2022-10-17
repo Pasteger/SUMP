@@ -28,7 +28,7 @@ public class UIController extends Controller {
     @FXML
     private TextField authorizationLoginTextField;
     @FXML
-    private TextField authorizationPasswordTextField;
+    private PasswordField authorizationPasswordPasswordField;
     @FXML
     private ImageView authorizationButton;
     @FXML
@@ -82,7 +82,7 @@ public class UIController extends Controller {
 
         authorizationRegistrationButton.setOnAction(actionEvent -> {
             authorizationLoginTextField.setText("");
-            authorizationPasswordTextField.setText("");
+            authorizationPasswordPasswordField.setText("");
             authorizationHeadLabel.setText(DEFAULT_VALUE_WHO_ARE_YOU);
 
             disableAuthorizationUIObjects();
@@ -97,14 +97,14 @@ public class UIController extends Controller {
 
         authorizationButton.setOnMouseClicked(mouseEvent -> {
             String response = service.authorization(
-                    authorizationLoginTextField.getText(), authorizationPasswordTextField.getText());
+                    authorizationLoginTextField.getText(), authorizationPasswordPasswordField.getText());
             authorizationHeadLabel.setText(response);
             if (!(response.equals("provider") || response.equals("client"))) {
                 authorizationHeadLabel.setText(response);
                 return;
             }
             authorizationLoginTextField.setText("");
-            authorizationPasswordTextField.setText("");
+            authorizationPasswordPasswordField.setText("");
             authorizationHeadLabel.setText(DEFAULT_VALUE_WHO_ARE_YOU);
 
             disableAuthorizationUIObjects();

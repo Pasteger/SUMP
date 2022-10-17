@@ -36,11 +36,11 @@
                 <Font name="Garamond" size="25.0" />
             </font>
         </TextField>
-        <TextField fx:id="authorizationPasswordTextField" alignment="CENTER" focusTraversable="false" layoutX="169.0" layoutY="240.0" prefHeight="50.0" prefWidth="306.0" promptText="Пароль" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
+        <PasswordField fx:id="authorizationPasswordPasswordField" alignment="CENTER" focusTraversable="false" layoutX="169.0" layoutY="240.0" prefHeight="50.0" prefWidth="306.0" promptText="Пароль" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
             <font>
                 <Font name="Garamond" size="25.0" />
             </font>
-        </TextField>
+        </PasswordField>
         <Button fx:id="authorizationRegistrationButton" alignment="CENTER" layoutX="470.0" layoutY="424.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="163.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="я новенький" textFill="#355fc9">
             <font>
                 <Font name="Garamond" size="24.0" />
@@ -51,33 +51,45 @@
         </ImageView>
     </AnchorPane>
     <AnchorPane fx:id="registrationAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+        <ImageView fitHeight="108.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../image/beat_mesa.png" />
+        </ImageView>
+        <ImageView fitHeight="108.0" fitWidth="108.0" layoutX="532.0" layoutY="3.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../image/beat_mesa.png" />
+        </ImageView>
+        <ImageView fitHeight="526.0" fitWidth="864.0" layoutX="60.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../image/milk_loop.png" />
+        </ImageView>
+        <ImageView fitHeight="133.0" fitWidth="146.0" layoutX="257.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../image/epitrochoid.gif" />
+        </ImageView>
 
-        <Label alignment="CENTER" layoutX="13.0" prefHeight="57.0" prefWidth="620.0" text="РЕГИСТРАЦИЯ" textAlignment="CENTER" textFill="#8e00ae">
+        <Label alignment="CENTER" layoutX="194.0" prefHeight="57.0" prefWidth="253.0" text="РЕГИСТРАЦИЯ" textAlignment="CENTER" textFill="#8e00ae">
             <font>
                 <Font name="Arial Bold" size="33.0" />
             </font>
         </Label>
-        <TextField fx:id="registrationLoginTextField" alignment="CENTER" focusTraversable="false" layoutX="393.0" layoutY="122.0" prefHeight="50.0" prefWidth="233.0" promptText="Логин" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
+        <TextField fx:id="registrationLoginTextField" alignment="CENTER" focusTraversable="false" layoutX="388.0" layoutY="181.0" prefHeight="50.0" prefWidth="233.0" promptText="Логин" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
             <font>
                 <Font name="Garamond" size="25.0" />
             </font>
         </TextField>
-        <TextField fx:id="registrationNameTextField" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="122.0" prefHeight="50.0" prefWidth="233.0" promptText="Название" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
+        <TextField fx:id="registrationNameTextField" alignment="CENTER" focusTraversable="false" layoutX="19.0" layoutY="181.0" prefHeight="50.0" prefWidth="233.0" promptText="Название" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
             <font>
                 <Font name="Garamond" size="25.0" />
             </font>
         </TextField>
-        <TextField fx:id="registrationAddressTextField" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="190.0" prefHeight="50.0" prefWidth="233.0" promptText="Адрес" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
+        <TextField fx:id="registrationAddressTextField" alignment="CENTER" focusTraversable="false" layoutX="19.0" layoutY="249.0" prefHeight="50.0" prefWidth="233.0" promptText="Адрес" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
             <font>
                 <Font name="Garamond" size="25.0" />
             </font>
         </TextField>
-        <TextField fx:id="registrationPhoneTextField" alignment="CENTER" focusTraversable="false" layoutX="393.0" layoutY="57.0" prefHeight="50.0" prefWidth="233.0" promptText="Телефон" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
+        <TextField fx:id="registrationPhoneTextField" alignment="CENTER" focusTraversable="false" layoutX="388.0" layoutY="116.0" prefHeight="50.0" prefWidth="233.0" promptText="Телефон" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;">
             <font>
                 <Font name="Garamond" size="25.0" />
             </font>
         </TextField>
-        <ImageView fx:id="registrationButton" fitHeight="121.0" fitWidth="75.0" layoutX="551.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="registrationButton" fitHeight="121.0" fitWidth="75.0" layoutX="549.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../image/skaia.png" />
         </ImageView>
         <Button fx:id="registrationBackButton" alignment="CENTER" layoutX="12.0" layoutY="414.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="193.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="я уже смешарик" textFill="#355fc9">
@@ -85,19 +97,19 @@
                 <Font name="Garamond" size="24.0" />
             </font>
         </Button>
-        <ComboBox fx:id="registrationEntityChoiceComboBox" layoutX="24.0" layoutY="256.0" prefHeight="27.0" prefWidth="233.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;" />
-      <TextField fx:id="registrationIDTextField" alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="57.0" prefHeight="50.0" prefWidth="233.0" promptText="Номер регистрации" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;">
-         <font>
-            <Font name="Garamond" size="25.0" />
-         </font>
-      </TextField>
-      <PasswordField fx:id="registrationPasswordPasswordField" alignment="CENTER" focusTraversable="false" layoutX="393.0" layoutY="190.0" prefHeight="50.0" prefWidth="233.0" promptText="Пароль" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;" />
-      <PasswordField fx:id="registrationConfirmationPasswordField" alignment="CENTER" focusTraversable="false" layoutX="393.0" layoutY="255.0" prefHeight="50.0" prefWidth="233.0" promptText="Подтверждение" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;" />
-      <Label fx:id="registrationErrorLabel" alignment="CENTER" layoutX="10.0" layoutY="320.0" prefHeight="33.0" prefWidth="620.0" textAlignment="CENTER" textFill="#355fc9">
-         <font>
-            <Font name="Garamond" size="34.0" />
-         </font>
-      </Label>
+        <ComboBox fx:id="registrationEntityChoiceComboBox" layoutX="19.0" layoutY="315.0" prefHeight="27.0" prefWidth="233.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 25;" />
+        <TextField fx:id="registrationIDTextField" alignment="CENTER" focusTraversable="false" layoutX="19.0" layoutY="116.0" prefHeight="50.0" prefWidth="233.0" promptText="Номер регистрации" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;">
+            <font>
+                <Font name="Garamond" size="25.0" />
+            </font>
+        </TextField>
+        <PasswordField fx:id="registrationPasswordPasswordField" alignment="CENTER" focusTraversable="false" layoutX="388.0" layoutY="249.0" prefHeight="50.0" prefWidth="233.0" promptText="Пароль" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;" />
+        <PasswordField fx:id="registrationConfirmationPasswordField" alignment="CENTER" focusTraversable="false" layoutX="388.0" layoutY="314.0" prefHeight="50.0" prefWidth="233.0" promptText="Подтверждение" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 24;" />
+        <Label fx:id="registrationErrorLabel" alignment="CENTER" layoutX="26.0" layoutY="57.0" prefHeight="40.0" prefWidth="595.0" textAlignment="CENTER" textFill="#355fc9">
+            <font>
+                <Font name="Garamond" size="34.0" />
+            </font>
+        </Label>
     </AnchorPane>
     <AnchorPane fx:id="providerRoomAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #eeeeee;" visible="false" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     </AnchorPane>

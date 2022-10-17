@@ -120,6 +120,18 @@ public class DatabaseHandler {
         return "success";
     }
 
+    public boolean checkExistenceRegistrationNumber(String entity, Long id){
+        try {
+            String request = "select * from " + entity + " where " + entity + "_registration_number = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            return true;
+        }
+    }
+
     private long getNewId() throws SQLException {
         String request = "select * from authorization_data";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
