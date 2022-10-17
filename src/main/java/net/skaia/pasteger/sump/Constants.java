@@ -16,7 +16,7 @@ public class Constants {
     public static final Media START_MUSIC = new Media(new File(
             "src\\main\\resources\\net\\skaia\\pasteger\\sump\\sound\\skaianet.mp3").toURI().toString());
 
-    public Constants() {
+    static {
         ENTITIES_FOR_REGISTRATION_ENTITY_CHOICE_COMBO_BOX.add("Поставщик");
         ENTITIES_FOR_REGISTRATION_ENTITY_CHOICE_COMBO_BOX.add("Закупщик");
     }

@@ -3,7 +3,14 @@ package net.skaia.pasteger.sump.database;
 import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Provider;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.*;
+import java.util.Arrays;
 
 public class DatabaseHandler {
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -87,8 +94,34 @@ public class DatabaseHandler {
         }
     }
 
+    public String registration(Long id, String name, String address, String phone,
+                               String entity, String login, String password) {
+        try {
+            String request = "insert into authorization_data (id, login, password, user_type, user_id) values(?,?,?,?,?)";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, getNewId());
+            preparedStatement.setString(2, login);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, entity);
+            preparedStatement.setLong(5, id);
+            preparedStatement.executeUpdate();
+
+            request = "insert into " + entity + " (" + entity + "_registration_number, name, address, phone_number) values(?,?,?,?)";
+            preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, phone);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            return "error";
+        }
+        return "success";
+    }
+
     private long getNewId() throws SQLException {
-        String request = "SELECT * FROM users";
+        String request = "select * from authorization_data";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
         ResultSet resultSet = preparedStatement.executeQuery();
         long id = 0;

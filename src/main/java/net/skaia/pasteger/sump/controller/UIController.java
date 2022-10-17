@@ -1,10 +1,7 @@
 package net.skaia.pasteger.sump.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import net.skaia.pasteger.sump.service.UIService;
@@ -48,9 +45,9 @@ public class UIController extends Controller {
     @FXML
     private Button registrationBackButton;
     @FXML
-    public TextField registrationLoginTextField;
+    public TextField registrationIDTextField;
     @FXML
-    public TextField registrationPasswordTextField;
+    public TextField registrationLoginTextField;
     @FXML
     public TextField registrationNameTextField;
     @FXML
@@ -58,7 +55,13 @@ public class UIController extends Controller {
     @FXML
     public TextField registrationPhoneTextField;
     @FXML
+    public PasswordField registrationPasswordPasswordField;
+    @FXML
+    public PasswordField registrationConfirmationPasswordField;
+    @FXML
     public ImageView registrationButton;
+    @FXML
+    public Label registrationErrorLabel;
 
 
     private final MediaPlayer mediaPlayer = new MediaPlayer(START_MUSIC);
@@ -86,12 +89,7 @@ public class UIController extends Controller {
             enableRegistrationUIObjects();
         });
         registrationBackButton.setOnAction(actionEvent -> {
-            registrationLoginTextField.setText("");
-            registrationPasswordTextField.setText("");
-            registrationNameTextField.setText("");
-            registrationAddressTextField.setText("");
-            registrationPhoneTextField.setText("");
-            registrationEntityChoiceComboBox.setValue(DEFAULT_VALUE_WHO_ARE_YOU);
+            resetRegistrationUI();
 
             disableRegistrationUIObjects();
             enableAuthorizationUIObjects();
@@ -118,12 +116,26 @@ public class UIController extends Controller {
         });
 
         registrationButton.setOnMouseClicked(mouseEvent -> {
-            registrationLoginTextField.setText("");
-            registrationPasswordTextField.setText("");
-            registrationNameTextField.setText("");
-            registrationAddressTextField.setText("");
-            registrationPhoneTextField.setText("");
-            registrationEntityChoiceComboBox.setValue(DEFAULT_VALUE_WHO_ARE_YOU);
+            String response;
+            if (!registrationConfirmationPasswordField.getText().equals(registrationPasswordPasswordField.getText())) {
+                registrationErrorLabel.setText("Пароли не совпадают");
+                return;
+            }
+            response = service.registration(
+                    registrationIDTextField.getText(), registrationNameTextField.getText(),
+                    registrationAddressTextField.getText(), registrationPhoneTextField.getText(),
+                    registrationEntityChoiceComboBox.getValue(),
+                    registrationLoginTextField.getText(), registrationPasswordPasswordField.getText());
+
+            if (!response.equals("success")) {
+                registrationErrorLabel.setText(response);
+                return;
+            }
+
+            disableRegistrationUIObjects();
+            enableAuthorizationUIObjects();
+
+            resetRegistrationUI();
         });
     }
 
@@ -152,12 +164,22 @@ public class UIController extends Controller {
         providerRoomAnchorPane.setVisible(false);
     }
 
-
     private void enableClientRoomUIObjects() {
         clientRoomAnchorPane.setVisible(true);
     }
 
     private void disableClientRoomUIObjects() {
         clientRoomAnchorPane.setVisible(false);
+    }
+
+    private void resetRegistrationUI() {
+        registrationIDTextField.setText("");
+        registrationLoginTextField.setText("");
+        registrationPasswordPasswordField.setText("");
+        registrationConfirmationPasswordField.setText("");
+        registrationNameTextField.setText("");
+        registrationAddressTextField.setText("");
+        registrationPhoneTextField.setText("");
+        registrationEntityChoiceComboBox.setValue(DEFAULT_VALUE_WHO_ARE_YOU);
     }
 }

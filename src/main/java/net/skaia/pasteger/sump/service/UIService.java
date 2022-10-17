@@ -4,6 +4,7 @@ import net.skaia.pasteger.sump.database.DatabaseHandler;
 import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Provider;
 
+import java.security.MessageDigest;
 import java.sql.SQLException;
 
 public class UIService {
@@ -23,6 +24,7 @@ public class UIService {
 
     public String authorization(String login, String password) {
         try {
+            password = passwordHashing(password);
             String response = databaseHandler.authorization(login, password);
             if (response.equals("login not found")) {
                 return "Пользователь не найден";
@@ -44,5 +46,29 @@ public class UIService {
         } catch (SQLException e) {
             return "Неизвестная ошибка";
         }
+    }
+
+    public String registration(String id, String name, String address, String phone,
+                               String entity, String login, String password) {
+        if (entity.equals("Поставщик")) {
+            entity = "provider";
+        } else {
+            entity = "client";
+        }
+        Long userId = Long.parseLong(id);
+        password = passwordHashing(password);
+
+        return databaseHandler.registration(userId, name, address, phone, entity, login, password);
+    }
+
+    private String passwordHashing(String password) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] hash = md5.digest(password.getBytes());
+            password = new String(hash);
+        } catch (Exception exception) {
+            return password;
+        }
+        return password;
     }
 }
