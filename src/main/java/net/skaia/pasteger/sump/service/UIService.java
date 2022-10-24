@@ -1,8 +1,11 @@
 package net.skaia.pasteger.sump.service;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import net.skaia.pasteger.sump.database.DatabaseHandler;
 import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Provider;
+import net.skaia.pasteger.sump.entity.Shipment;
 
 import java.security.MessageDigest;
 import java.sql.SQLException;
@@ -21,6 +24,7 @@ public class UIService {
 
     private Provider provider;
     private Client client;
+    private ObservableList<Shipment> shipmentList;
 
     public String authorization(String login, String password) {
         try {
@@ -97,5 +101,99 @@ public class UIService {
             return password;
         }
         return password;
+
+        /*try {
+            byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] hash = md5.digest(bytes);
+            BigInteger bigInteger = new BigInteger(1, hash);
+            password = bigInteger.toString(16);
+            System.out.println(password);
+        } catch (Exception exception) {
+            return password;
+        }
+        return password;*/
+    }
+
+    public ObservableList<String> getRequestedShipments() {
+        setShipmentList();
+
+        ObservableList<Shipment> requestedShipmentList;
+        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
+
+        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("requested"));
+
+        requestedShipmentList.forEach(shipment ->
+                requestedShipmentStringList.add(
+                        shipment.getNumber() + " " +
+                                shipment.getProductKey() + " " +
+                                shipment.getProductQuantity() + " "
+                )
+        );
+
+        return requestedShipmentStringList;
+    }
+
+    public ObservableList<String> getAcceptedShipments() {
+        ObservableList<Shipment> requestedShipmentList;
+        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
+
+        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("accepted"));
+
+        requestedShipmentList.forEach(shipment ->
+                requestedShipmentStringList.add(
+                        shipment.getNumber() + " " +
+                                shipment.getProductKey() + " " +
+                                shipment.getProductQuantity() + " "
+                )
+        );
+
+        return requestedShipmentStringList;
+    }
+
+    public ObservableList<String> getArrivalsShipments() {
+        ObservableList<Shipment> requestedShipmentList;
+        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
+
+        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("arrivals"));
+
+        requestedShipmentList.forEach(shipment ->
+                requestedShipmentStringList.add(
+                        shipment.getNumber() + " " +
+                                shipment.getProductKey() + " " +
+                                shipment.getProductQuantity() + " "
+                )
+        );
+
+        return requestedShipmentStringList;
+    }
+
+    public ObservableList<String> getRejectedShipments() {
+        ObservableList<Shipment> requestedShipmentList;
+        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
+
+        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("rejected"));
+
+        requestedShipmentList.forEach(shipment ->
+                requestedShipmentStringList.add(
+                        shipment.getNumber() + " " +
+                                shipment.getProductKey() + " " +
+                                shipment.getProductQuantity() + " "
+                )
+        );
+
+        return requestedShipmentStringList;
+    }
+
+    private void setShipmentList() {
+        shipmentList = databaseHandler.getShipmentStringList(client.getClientRegistrationNumber());
+    }
+
+    public void acceptShipment(String value) {
+        try {
+            Long number = Long.parseLong(value.split(" ")[0]);
+
+            databaseHandler.acceptShipment(number);
+        } catch (Exception ignored){}
     }
 }

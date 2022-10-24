@@ -1,7 +1,10 @@
 package net.skaia.pasteger.sump.database;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Provider;
+import net.skaia.pasteger.sump.entity.Shipment;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -130,6 +133,40 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             return true;
         }
+    }
+
+
+    public ObservableList<Shipment> getShipmentStringList(Long clientRegistrationNumber) {
+        ObservableList<Shipment> shipments = FXCollections.observableArrayList();
+        try {
+            String request = "select * from shipment where client_registration_number = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, clientRegistrationNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Shipment shipment = new Shipment();
+                shipment.setNumber(resultSet.getLong("number"));
+                shipment.setStatus(resultSet.getString("status"));
+                shipment.setProductKey(resultSet.getLong("product_key"));
+                shipment.setProductQuantity(resultSet.getInt("product_quantity"));
+                shipment.setProviderRegistrationNumber(resultSet.getLong("provider_registration_number"));
+                shipment.setClientRegistrationNumber(resultSet.getLong("client_registration_number"));
+
+                shipments.add(shipment);
+            }
+            return shipments;
+        } catch (SQLException e) {
+            return shipments;
+        }
+    }
+
+    public void acceptShipment(Long number) {
+        try {
+            String request = "update shipment set status  = 'accepted' where number = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, number);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ignored) {}
     }
 
     private long getNewId() throws SQLException {
