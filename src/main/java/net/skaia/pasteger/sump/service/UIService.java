@@ -118,12 +118,9 @@ public class UIService {
     public ObservableList<String> getRequestedShipments() {
         setShipmentList();
 
-        ObservableList<Shipment> requestedShipmentList;
         ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
 
-        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("requested"));
-
-        requestedShipmentList.forEach(shipment ->
+        shipmentList.filtered(shipment -> shipment.getStatus().equals("requested")).forEach(shipment ->
                 requestedShipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
@@ -135,12 +132,9 @@ public class UIService {
     }
 
     public ObservableList<String> getAcceptedShipments() {
-        ObservableList<Shipment> requestedShipmentList;
         ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
 
-        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("accepted"));
-
-        requestedShipmentList.forEach(shipment ->
+        shipmentList.filtered(shipment -> shipment.getStatus().equals("accepted")).forEach(shipment ->
                 requestedShipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
@@ -152,12 +146,9 @@ public class UIService {
     }
 
     public ObservableList<String> getArrivalsShipments() {
-        ObservableList<Shipment> requestedShipmentList;
         ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
 
-        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("arrivals"));
-
-        requestedShipmentList.forEach(shipment ->
+        shipmentList.filtered(shipment -> shipment.getStatus().equals("arrivals")).forEach(shipment ->
                 requestedShipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
@@ -169,12 +160,9 @@ public class UIService {
     }
 
     public ObservableList<String> getRejectedShipments() {
-        ObservableList<Shipment> requestedShipmentList;
         ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
 
-        requestedShipmentList = shipmentList.filtered(shipment -> shipment.getStatus().equals("rejected"));
-
-        requestedShipmentList.forEach(shipment ->
+        shipmentList.filtered(shipment -> shipment.getStatus().equals("rejected")).forEach(shipment ->
                 requestedShipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
@@ -194,6 +182,7 @@ public class UIService {
             Long number = Long.parseLong(value.split(" ")[0]);
 
             databaseHandler.acceptShipment(number);
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 }

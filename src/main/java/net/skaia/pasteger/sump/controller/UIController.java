@@ -89,10 +89,10 @@ public class UIController extends Controller {
 
     @FXML
     void initialize() {
-        clientRequestedShipmentsComboBox.setValue("Запрошенные");
-        clientArrivalsShipmentsComboBox.setValue("Прибывшие");
-        clientRejectedShipmentsComboBox.setValue("Забракованные");
-        clientAcceptedShipmentsComboBox.setValue("Принятые");
+        clientRequestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
+        clientArrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
+        clientRejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
+        clientAcceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
 
         enableAuthorizationUIObjects();
         disableRegistrationUIObjects();
@@ -171,7 +171,8 @@ public class UIController extends Controller {
 
         clientArrivalsShipmentsComboBox.setOnAction(event -> {
             if (clientArrivalsShipmentsComboBox.getValue() == null ||
-                    clientArrivalsShipmentsComboBox.getValue().equals("Прибывшие")) return;
+                    clientArrivalsShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX))
+                return;
             String value = clientArrivalsShipmentsComboBox.getValue();
             service.acceptShipment(value);
             updateClientRoomUIObjectValue();
@@ -180,30 +181,33 @@ public class UIController extends Controller {
         clientRejectedShipmentsComboBox.setOnAction(event ->
                 Platform.runLater(() -> {
                     if (clientRejectedShipmentsComboBox.getValue() == null ||
-                            clientRejectedShipmentsComboBox.getValue().equals("Забракованные")) return;
+                            clientRejectedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX))
+                        return;
                     String value = clientRejectedShipmentsComboBox.getValue();
 
-                    clientRejectedShipmentsComboBox.setValue("Забракованные");
+                    clientRejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
                 })
         );
 
         clientAcceptedShipmentsComboBox.setOnAction(event ->
                 Platform.runLater(() -> {
                     if (clientAcceptedShipmentsComboBox.getValue() == null ||
-                            clientAcceptedShipmentsComboBox.getValue().equals("Принятые")) return;
+                            clientAcceptedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX))
+                        return;
                     String value = clientAcceptedShipmentsComboBox.getValue();
 
-                    clientAcceptedShipmentsComboBox.setValue("Принятые");
+                    clientAcceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
                 })
         );
 
         clientRequestedShipmentsComboBox.setOnAction(event ->
                 Platform.runLater(() -> {
                     if (clientRequestedShipmentsComboBox.getValue() == null ||
-                            clientRequestedShipmentsComboBox.getValue().equals("Запрошенные")) return;
+                            clientRequestedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX))
+                        return;
                     String value = clientRequestedShipmentsComboBox.getValue();
 
-                    clientRequestedShipmentsComboBox.setValue("Запрошенные");
+                    clientRequestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
                 })
         );
 
@@ -271,7 +275,7 @@ public class UIController extends Controller {
                     !(clientArrivalsShipmentsComboBox.getItems() == null || clientArrivalsShipmentsComboBox.getItems().isEmpty()));
 
 
-            clientArrivalsShipmentsComboBox.setValue("Прибывшие");
+            clientArrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
         });
     }
 
