@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,29 +17,32 @@ import static net.skaia.pasteger.sump.Constants.*;
 
 public class Controller {
     private static Stage stage;
+    protected final MediaPlayer mediaPlayer = new MediaPlayer(START_MUSIC);
+    private static final String PATH_TO_LAYOUT = "/net/skaia/pasteger/sump/layout/";
 
-    public static void openOtherWindow(String window, Button button) {
+    public static void openOtherWindow(String layoutName, Button button) {
         button.getScene().getWindow().hide();
-        openNewWindow(window);
+        openNewWindow(layoutName);
     }
 
-    public static void openOtherWindow(String window, ImageView imageView) {
+    public static void openOtherWindow(String layoutName, ImageView imageView) {
         imageView.getScene().getWindow().hide();
-        openNewWindow(window);
+        openNewWindow(layoutName);
     }
 
-    public static void openOtherWindow(String window, Label label) {
+    public static void openOtherWindow(String layoutName, Label label) {
         label.getScene().getWindow().hide();
-        openNewWindow(window);
+        openNewWindow(layoutName);
     }
 
-    public static void openOtherWindow(String window, TextField textField) {
+    public static void openOtherWindow(String layoutName, TextField textField) {
         textField.getScene().getWindow().hide();
-        openNewWindow(window);
+        openNewWindow(layoutName);
     }
 
     public static void openNewWindow(String window) {
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource(window));
+        String path = PATH_TO_LAYOUT + window + ".fxml";
+        FXMLLoader loader = new FXMLLoader(Controller.class.getResource(path));
         try {
             loader.load();
         } catch (IOException ioException) {
@@ -59,9 +63,5 @@ public class Controller {
 
     public static void setStage(Stage stage) {
         Controller.stage = stage;
-    }
-
-    public static Stage getStage() {
-        return stage;
     }
 }

@@ -6,14 +6,9 @@ import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Provider;
 import net.skaia.pasteger.sump.entity.Shipment;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.sql.*;
-import java.util.Arrays;
+
+import static net.skaia.pasteger.sump.Constants.*;
 
 public class DatabaseHandler {
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -30,7 +25,7 @@ public class DatabaseHandler {
             throw new RuntimeException(e);
         }
         try {
-            dbConnection = DriverManager.getConnection(connectionString, "postgres", "890123890123");
+            dbConnection = DriverManager.getConnection(connectionString, DATABASE_USER, DATABASE_PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +97,7 @@ public class DatabaseHandler {
         try {
             String request = "insert into authorization_data (id, login, password, user_type, user_id) values(?,?,?,?,?)";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
-            preparedStatement.setLong(1, getNewId());
+            preparedStatement.setLong(1, generateNewId());
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, entity);
@@ -123,7 +118,7 @@ public class DatabaseHandler {
         return "success";
     }
 
-    public boolean checkExistenceRegistrationNumber(String entity, Long id){
+    public boolean checkExistenceRegistrationNumber(String entity, Long id) {
         try {
             String request = "select * from " + entity + " where " + entity + "_registration_number = ?";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
@@ -143,7 +138,7 @@ public class DatabaseHandler {
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
             preparedStatement.setLong(1, clientRegistrationNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Shipment shipment = new Shipment();
                 shipment.setNumber(resultSet.getLong("number"));
                 shipment.setStatus(resultSet.getString("status"));
@@ -166,10 +161,11 @@ public class DatabaseHandler {
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
             preparedStatement.setLong(1, number);
             preparedStatement.executeUpdate();
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
     }
 
-    private long getNewId() throws SQLException {
+    private long generateNewId() throws SQLException {
         String request = "select * from authorization_data";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
         ResultSet resultSet = preparedStatement.executeQuery();

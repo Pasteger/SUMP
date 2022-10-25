@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import net.skaia.pasteger.sump.controller.Controller;
 
-import static net.skaia.pasteger.sump.Constants.*;
+import static net.skaia.pasteger.sump.Constants.START_LAYOUT;
 
 public class Main extends Application {
     @Override
