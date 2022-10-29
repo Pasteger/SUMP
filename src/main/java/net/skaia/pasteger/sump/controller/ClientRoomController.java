@@ -43,14 +43,19 @@ public class ClientRoomController extends Controller {
                 openOtherWindow("authorization", exitButton));
 
 
-        arrivalsShipmentsComboBox.setOnAction(event -> {
-            if (arrivalsShipmentsComboBox.getValue() == null ||
-                    arrivalsShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX))
-                return;
-            String value = arrivalsShipmentsComboBox.getValue();
-            service.acceptShipment(value);
-            updateShipmentsComboBoxValue();
-        });
+        arrivalsShipmentsComboBox.setOnAction(event ->
+            Platform.runLater(() -> {
+                if (arrivalsShipmentsComboBox.getValue() == null ||
+                        arrivalsShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX))
+                    return;
+                String value = arrivalsShipmentsComboBox.getValue();
+
+                arrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
+
+                service.injectShipment(value, "arrivals");
+                openOtherWindow("client_shipment_handler", arrivalsShipmentsComboBox);
+            })
+        );
 
         rejectedShipmentsComboBox.setOnAction(event ->
                 Platform.runLater(() -> {
@@ -60,6 +65,9 @@ public class ClientRoomController extends Controller {
                     String value = rejectedShipmentsComboBox.getValue();
 
                     rejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
+
+                    service.injectShipment(value, "rejected");
+                    openOtherWindow("client_shipment_handler", rejectedShipmentsComboBox);
                 })
         );
 
@@ -71,6 +79,9 @@ public class ClientRoomController extends Controller {
                     String value = acceptedShipmentsComboBox.getValue();
 
                     acceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
+
+                    service.injectShipment(value, "accepted");
+                    openOtherWindow("client_shipment_handler", acceptedShipmentsComboBox);
                 })
         );
 
@@ -82,6 +93,9 @@ public class ClientRoomController extends Controller {
                     String value = requestedShipmentsComboBox.getValue();
 
                     requestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
+
+                    service.injectShipment(value, "requested");
+                    openOtherWindow("client_shipment_handler", requestedShipmentsComboBox);
                 })
         );
 
@@ -103,9 +117,6 @@ public class ClientRoomController extends Controller {
             arrivalsRequestedShipmentsImageView.setVisible(
                     !(arrivalsShipmentsComboBox.getItems() == null ||
                             arrivalsShipmentsComboBox.getItems().isEmpty()));
-
-
-            arrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
         });
     }
 }

@@ -17,6 +17,7 @@ public class ClientRoomService {
     }
 
     private final DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+    ClientShipmentHandlerService clientShipmentHandlerService = ClientShipmentHandlerService.getInstance();
 
     private Client client;
     private ObservableList<Shipment> shipmentList;
@@ -25,6 +26,7 @@ public class ClientRoomService {
         setShipmentList();
 
         ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
+        requestedShipmentStringList.add("Новая");
 
         shipmentList.filtered(shipment -> shipment.getStatus().equals("requested")).forEach(shipment ->
                 requestedShipmentStringList.add(
@@ -79,6 +81,22 @@ public class ClientRoomService {
         return requestedShipmentStringList;
     }
 
+    public void injectShipment(String stringShipment, String status) {
+        Shipment shipment = new Shipment();
+
+        if (!stringShipment.equals("Новая")){
+            shipment.setNumber(Long.parseLong(stringShipment.split(" ")[0]));
+            shipment.setProductKey(Long.parseLong(stringShipment.split(" ")[1]));
+            shipment.setProductQuantity(Integer.parseInt(stringShipment.split(" ")[2]));
+            shipment.setStatus(status);
+        }
+        else {
+            shipment.setStatus("");
+        }
+
+        clientShipmentHandlerService.setClient(client);
+        clientShipmentHandlerService.setShipment(shipment);
+    }
 
     public void acceptShipment(String value) {
         try {
@@ -94,6 +112,6 @@ public class ClientRoomService {
     }
 
     private void setShipmentList() {
-        shipmentList = databaseHandler.getShipmentStringList(client.getClientRegistrationNumber());
+        shipmentList = databaseHandler.getShipmentList(client.getClientRegistrationNumber());
     }
 }

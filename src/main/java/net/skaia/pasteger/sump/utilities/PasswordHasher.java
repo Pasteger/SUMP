@@ -15,7 +15,6 @@ public class PasswordHasher {
             byte[] hash = md5.digest(bytes);
             BigInteger bigInteger = new BigInteger(1, hash);
             password = bigInteger.toString(16);
-            System.out.println(password);
         } catch (Exception exception) {
             return password;
         }

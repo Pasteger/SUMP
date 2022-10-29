@@ -3,6 +3,7 @@ package net.skaia.pasteger.sump.database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import net.skaia.pasteger.sump.entity.Client;
+import net.skaia.pasteger.sump.entity.Product;
 import net.skaia.pasteger.sump.entity.Provider;
 import net.skaia.pasteger.sump.entity.Shipment;
 
@@ -97,7 +98,7 @@ public class DatabaseHandler {
         try {
             String request = "insert into authorization_data (id, login, password, user_type, user_id) values(?,?,?,?,?)";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
-            preparedStatement.setLong(1, generateNewId());
+            preparedStatement.setLong(1, generateNewId("authorization_data", "id"));
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, entity);
@@ -131,7 +132,7 @@ public class DatabaseHandler {
     }
 
 
-    public ObservableList<Shipment> getShipmentStringList(Long clientRegistrationNumber) {
+    public ObservableList<Shipment> getShipmentList(Long clientRegistrationNumber) {
         ObservableList<Shipment> shipments = FXCollections.observableArrayList();
         try {
             String request = "select * from shipment where client_registration_number = ?";
@@ -155,6 +156,50 @@ public class DatabaseHandler {
         }
     }
 
+    public ObservableList<Product> getProductList() {
+        ObservableList<Product> productList = FXCollections.observableArrayList();
+        try {
+            String request = "select * from product";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setProductKey(resultSet.getLong("product_key"));
+                product.setName(resultSet.getString("name"));
+                product.setType(resultSet.getString("type"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setWeight(resultSet.getInt("weight"));
+                product.setPackageType(resultSet.getString("package_type"));
+
+                productList.add(product);
+            }
+            return productList;
+        } catch (SQLException e) {
+            return productList;
+        }
+    }
+
+    public ObservableList<Provider> getProviderList() {
+        ObservableList<Provider> providerList = FXCollections.observableArrayList();
+        try {
+            String request = "select * from provider";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Provider provider = new Provider();
+                provider.setProviderRegistrationNumber(resultSet.getLong("provider_registration_number"));
+                provider.setName(resultSet.getString("name"));
+                provider.setAddress(resultSet.getString("address"));
+                provider.setPhoneNumber(resultSet.getString("phone_number"));
+
+                providerList.add(provider);
+            }
+            return providerList;
+        } catch (SQLException e) {
+            return providerList;
+        }
+    }
+
     public void acceptShipment(Long number) {
         try {
             String request = "update shipment set status  = 'accepted' where number = ?";
@@ -165,20 +210,42 @@ public class DatabaseHandler {
         }
     }
 
-    private long generateNewId() throws SQLException {
-        String request = "select * from authorization_data";
+
+    public String insertShipment(Shipment shipment) {
+        try {
+            shipment.setNumber(generateNewId("shipment", "number"));
+            String request = "insert into shipment" +
+                    "(number, status, product_key, product_quantity, provider_registration_number, client_registration_number)" +
+                    "values(?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            preparedStatement.setLong(1, shipment.getNumber());
+            preparedStatement.setString(2, shipment.getStatus());
+            preparedStatement.setLong(3, shipment.getProductKey());
+            preparedStatement.setInt(4, shipment.getProductQuantity());
+            preparedStatement.setLong(5, shipment.getProviderRegistrationNumber());
+            preparedStatement.setLong(6, shipment.getClientRegistrationNumber());
+            preparedStatement.executeUpdate();
+
+            return "success";
+        } catch (SQLException e) {
+            return "error";
+        }
+    }
+
+    private long generateNewId(String table, String id) throws SQLException {
+        String request = "select " + id + " from " + table;
         PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
         ResultSet resultSet = preparedStatement.executeQuery();
-        long id = 0;
+        long newId = 0;
         try {
             while (resultSet.next()) {
-                long thisId = Long.parseLong(resultSet.getString("id"));
-                if (id < thisId) {
-                    id = thisId;
+                long thisId = Long.parseLong(resultSet.getString(id));
+                if (newId < thisId) {
+                    newId = thisId;
                 }
             }
         } catch (Exception ignored) {
         }
-        return ++id;
+        return ++newId;
     }
 }
