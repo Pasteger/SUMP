@@ -52,7 +52,7 @@ public class ClientRoomController extends Controller {
 
                 arrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
 
-                service.injectShipment(value, "arrivals");
+                service.injectShipment(value);
                 openOtherWindow("client_shipment_handler", arrivalsShipmentsComboBox);
             })
         );
@@ -66,7 +66,7 @@ public class ClientRoomController extends Controller {
 
                     rejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
 
-                    service.injectShipment(value, "rejected");
+                    service.injectShipment(value);
                     openOtherWindow("client_shipment_handler", rejectedShipmentsComboBox);
                 })
         );
@@ -80,7 +80,7 @@ public class ClientRoomController extends Controller {
 
                     acceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
 
-                    service.injectShipment(value, "accepted");
+                    service.injectShipment(value);
                     openOtherWindow("client_shipment_handler", acceptedShipmentsComboBox);
                 })
         );
@@ -94,7 +94,7 @@ public class ClientRoomController extends Controller {
 
                     requestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
 
-                    service.injectShipment(value, "requested");
+                    service.injectShipment(value);
                     openOtherWindow("client_shipment_handler", requestedShipmentsComboBox);
                 })
         );

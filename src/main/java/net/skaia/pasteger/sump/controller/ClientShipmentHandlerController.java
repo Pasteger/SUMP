@@ -37,56 +37,65 @@ public class ClientShipmentHandlerController extends Controller {
 
     @FXML
     void initialize() {
-        if (service.getShipmentStatus().equals("arrivals")) {
-            shipmentStatusLabel.setText("ПРИБЫВШАЯ ПОСТАВКА");
-            deleteButton.setVisible(false);
-            cancelButton.setVisible(false);
-            resendButton.setVisible(false);
-            sendButton.setVisible(false);
-        } else if (service.getShipmentStatus().equals("accepted")) {
-            shipmentStatusLabel.setText("ПРИНЯТАЯ ПОСТАВКА");
-            deleteButton.setVisible(false);
-            cancelButton.setVisible(false);
-            resendButton.setVisible(false);
-            sendButton.setVisible(false);
-            rejectButton.setVisible(false);
-            acceptButton.setVisible(false);
-        } else if (service.getShipmentStatus().equals("requested")) {
-            shipmentStatusLabel.setText("ЗАПРОШЕННАЯ ПОСТАВКА");
-            deleteButton.setVisible(false);
-            resendButton.setVisible(false);
-            sendButton.setVisible(false);
-            rejectButton.setVisible(false);
-            acceptButton.setVisible(false);
-        } else if (service.getShipmentStatus().equals("rejected")) {
-            shipmentStatusLabel.setText("ЗАБРАКОВАННАЯ ПОСТАВКА");
-            sendButton.setVisible(false);
-            rejectButton.setVisible(false);
-            acceptButton.setVisible(false);
-            cancelButton.setVisible(false);
-        } else {
-            shipmentStatusLabel.setText("НОВАЯ ПОСТАВКА");
-            deleteButton.setVisible(false);
-            cancelButton.setVisible(false);
-            resendButton.setVisible(false);
-            rejectButton.setVisible(false);
-            acceptButton.setVisible(false);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(false);
+        resendButton.setVisible(false);
+        sendButton.setVisible(false);
+        rejectButton.setVisible(false);
+        acceptButton.setVisible(false);
 
-            clientListComboBox.setValue(service.getClient().getName());
-            productListComboBox.setItems(service.getProductStringList());
-            providerListComboBox.setItems(service.getProviderStringList());
+        switch (service.getShipment().getStatus()) {
+            case "arrivals" -> {
+                shipmentStatusLabel.setText("ПРИБЫВШАЯ ПОСТАВКА");
+                acceptButton.setVisible(true);
+                rejectButton.setVisible(true);
+                clientListComboBox.setValue(service.getClient().getName());
+                clientListComboBox.setDisable(true);
+                productListComboBox.setValue(
+                        service.getProduct(service.getShipment().getProductKey()).getName());
+                productListComboBox.setDisable(true);
+                providerListComboBox.setValue(
+                        service.getProvider(service.getShipment().getProviderRegistrationNumber()).getName());
+                providerListComboBox.setDisable(true);
+                productQuantityTextField.setText(service.getShipment().getProductQuantity().toString());
+                productQuantityTextField.setDisable(true);
+            }
+            case "accepted" -> shipmentStatusLabel.setText("ПРИНЯТАЯ ПОСТАВКА");
+            case "requested" -> {
+                shipmentStatusLabel.setText("ЗАПРОШЕННАЯ ПОСТАВКА");
+                cancelButton.setVisible(true);
+            }
+            case "rejected" -> {
+                shipmentStatusLabel.setText("ЗАБРАКОВАННАЯ ПОСТАВКА");
+                deleteButton.setVisible(true);
+                resendButton.setVisible(true);
+            }
+            default -> {
+                shipmentStatusLabel.setText("НОВАЯ ПОСТАВКА");
+                sendButton.setVisible(true);
+                clientListComboBox.setValue(service.getClient().getName());
+                productListComboBox.setItems(service.getProductStringList());
+                providerListComboBox.setItems(service.getProviderStringList());
+            }
         }
 
         backButton.setOnAction(actionEvent -> openOtherWindow("client_room", backButton));
 
-        sendButton.setOnAction(actionEvent -> {
-            String response = service.sendShipment(
-                    productQuantityTextField.getText(), providerListComboBox.getValue(), productListComboBox.getValue());
-            if (response.equals("success")) {
-                openOtherWindow("client_room", sendButton);
-            } else {
-                shipmentStatusLabel.setText("Ошибка");
-            }
-        });
+        sendButton.setOnAction(actionEvent ->
+                handleResponse(service.sendShipment(
+                        productQuantityTextField.getText(), providerListComboBox.getValue(), productListComboBox.getValue())
+                )
+        );
+
+        acceptButton.setOnAction(actionEvent -> handleResponse(service.acceptShipment()));
+        rejectButton.setOnAction(actionEvent -> handleResponse(service.rejectShipment()));
+    }
+
+    private void handleResponse(String response) {
+        if (response.equals("success")) {
+            openOtherWindow("client_room", sendButton);
+        } else {
+            shipmentStatusLabel.setText("Ошибка");
+        }
     }
 }

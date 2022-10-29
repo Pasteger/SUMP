@@ -200,16 +200,13 @@ public class DatabaseHandler {
         }
     }
 
-    public void acceptShipment(Long number) {
-        try {
-            String request = "update shipment set status  = 'accepted' where number = ?";
-            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
-            preparedStatement.setLong(1, number);
-            preparedStatement.executeUpdate();
-        } catch (SQLException ignored) {
-        }
+    public void updateShipmentStatus(Long number, String status) throws SQLException {
+        String request = "update shipment set status  = ? where number = ?";
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+        preparedStatement.setString(1, status);
+        preparedStatement.setLong(2, number);
+        preparedStatement.executeUpdate();
     }
-
 
     public String insertShipment(Shipment shipment) {
         try {

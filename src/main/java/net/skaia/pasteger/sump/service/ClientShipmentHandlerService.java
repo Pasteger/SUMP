@@ -70,6 +70,24 @@ public class ClientShipmentHandlerService {
         return databaseHandler.insertShipment(shipment);
     }
 
+    public String acceptShipment() {
+        try {
+            databaseHandler.updateShipmentStatus(shipment.getNumber(), "accepted");
+            return "success";
+        } catch (Exception exception) {
+            return "error";
+        }
+    }
+
+    public String rejectShipment() {
+        try {
+            databaseHandler.updateShipmentStatus(shipment.getNumber(), "rejected");
+            return "success";
+        } catch (Exception exception) {
+            return "error";
+        }
+    }
+
     public void setClient(Client client) {
         this.client = client;
     }
@@ -78,20 +96,18 @@ public class ClientShipmentHandlerService {
         this.shipment = shipment;
     }
 
-    public String getShipmentStatus() {
-        return shipment.getStatus();
-    }
-
     public Client getClient() {
         return client;
+    }
+
+    public Shipment getShipment() {
+        return shipment;
     }
 
     private Provider findProvider(String providerString) {
         String[] providerStringArray = providerString.split(" ");
         Long id = Long.parseLong(providerStringArray[providerStringArray.length - 1]);
-        Optional<Provider> providerOptional = providerList.stream().filter(provider ->
-                Objects.equals(provider.getProviderRegistrationNumber(), id)).findFirst();
-        return providerOptional.orElse(null);
+        return getProvider(id);
     }
 
     private Product findProduct(String productString) {
@@ -108,5 +124,19 @@ public class ClientShipmentHandlerService {
 
     private void setProductList() {
         this.productList = databaseHandler.getProductList();
+    }
+
+    public Product getProduct(Long key) {
+        setProductList();
+        Optional<Product> productOptional = productList.stream().filter(product ->
+                Objects.equals(product.getProductKey(), key)).findFirst();
+        return productOptional.orElse(null);
+    }
+
+    public Provider getProvider(Long providerRegistrationNumber) {
+        setProviderList();
+        Optional<Provider> providerOptional = providerList.stream().filter(provider ->
+                Objects.equals(provider.getProviderRegistrationNumber(), providerRegistrationNumber)).findFirst();
+        return providerOptional.orElse(null);
     }
 }

@@ -6,6 +6,8 @@ import net.skaia.pasteger.sump.database.DatabaseHandler;
 import net.skaia.pasteger.sump.entity.Client;
 import net.skaia.pasteger.sump.entity.Shipment;
 
+import java.util.Objects;
+
 public class ClientRoomService {
     private static final ClientRoomService clientRoomService = new ClientRoomService();
 
@@ -81,30 +83,20 @@ public class ClientRoomService {
         return requestedShipmentStringList;
     }
 
-    public void injectShipment(String stringShipment, String status) {
+    public void injectShipment(String stringShipment) {
         Shipment shipment = new Shipment();
 
-        if (!stringShipment.equals("Новая")){
-            shipment.setNumber(Long.parseLong(stringShipment.split(" ")[0]));
-            shipment.setProductKey(Long.parseLong(stringShipment.split(" ")[1]));
-            shipment.setProductQuantity(Integer.parseInt(stringShipment.split(" ")[2]));
-            shipment.setStatus(status);
-        }
-        else {
-            shipment.setStatus("");
+        if (!stringShipment.equals("Новая")) {
+            Long id = Long.parseLong(stringShipment.split(" ")[0]);
+            shipment = shipmentList.stream().filter(shipmentInList ->
+                    Objects.equals(shipmentInList.getNumber(), id)).findFirst().orElse(null);
+        } else {
+            //Этот else важен, не удаляй его
+            shipment.setStatus("new");
         }
 
         clientShipmentHandlerService.setClient(client);
         clientShipmentHandlerService.setShipment(shipment);
-    }
-
-    public void acceptShipment(String value) {
-        try {
-            Long number = Long.parseLong(value.split(" ")[0]);
-
-            databaseHandler.acceptShipment(number);
-        } catch (Exception ignored) {
-        }
     }
 
     public void setClient(Client client) {

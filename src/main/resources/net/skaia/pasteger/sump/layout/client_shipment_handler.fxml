@@ -18,14 +18,14 @@
             <Font name="Arial Bold" size="30.0" />
         </font>
     </Label>
-    <ComboBox fx:id="productListComboBox" layoutX="14.0" layoutY="48.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="226.0" promptText="Продукт" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;" />
-    <TextField fx:id="productQuantityTextField" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="14.0" layoutY="117.0" prefHeight="41.0" prefWidth="226.0" promptText="Количество" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #000000; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;">
+    <ComboBox fx:id="productListComboBox" layoutX="14.0" layoutY="48.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.99" prefHeight="41.0" prefWidth="226.0" promptText="Продукт" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;" />
+    <TextField fx:id="productQuantityTextField" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="14.0" layoutY="117.0" opacity="0.99" prefHeight="41.0" prefWidth="226.0" promptText="Количество" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #000000; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;">
         <font>
             <Font name="Garamond" size="18.0" />
         </font>
     </TextField>
    <ComboBox fx:id="clientListComboBox" disable="true" layoutX="260.0" layoutY="48.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.95" prefHeight="41.0" prefWidth="226.0" promptText="Заказчик" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;" />
-   <ComboBox fx:id="providerListComboBox" layoutX="260.0" layoutY="117.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="41.0" prefWidth="226.0" promptText="Поставщик" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;" />
+   <ComboBox fx:id="providerListComboBox" layoutX="260.0" layoutY="117.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.99" prefHeight="41.0" prefWidth="226.0" promptText="Поставщик" style="-fx-background-color: #e1dfeb; -fx-border-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-background-radius: 50; -fx-border-radius: 50; -fx-font-size: 18;" />
     <Button fx:id="rejectButton" alignment="CENTER" layoutX="16.0" layoutY="388.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="144.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="забраковать" textFill="#355fc9">
         <font>
             <Font name="Garamond" size="20.0" />
