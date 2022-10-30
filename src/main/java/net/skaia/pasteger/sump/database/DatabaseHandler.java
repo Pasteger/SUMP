@@ -208,6 +208,13 @@ public class DatabaseHandler {
         preparedStatement.executeUpdate();
     }
 
+    public void deleteShipment(Long number) throws SQLException {
+        String request = "delete from shipment where number = ?";
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+        preparedStatement.setLong(1, number);
+        preparedStatement.executeUpdate();
+    }
+
     public String insertShipment(Shipment shipment) {
         try {
             shipment.setNumber(generateNewId("shipment", "number"));

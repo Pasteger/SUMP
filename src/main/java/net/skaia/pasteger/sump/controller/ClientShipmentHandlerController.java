@@ -49,26 +49,22 @@ public class ClientShipmentHandlerController extends Controller {
                 shipmentStatusLabel.setText("ПРИБЫВШАЯ ПОСТАВКА");
                 acceptButton.setVisible(true);
                 rejectButton.setVisible(true);
-                clientListComboBox.setValue(service.getClient().getName());
-                clientListComboBox.setDisable(true);
-                productListComboBox.setValue(
-                        service.getProduct(service.getShipment().getProductKey()).getName());
-                productListComboBox.setDisable(true);
-                providerListComboBox.setValue(
-                        service.getProvider(service.getShipment().getProviderRegistrationNumber()).getName());
-                providerListComboBox.setDisable(true);
-                productQuantityTextField.setText(service.getShipment().getProductQuantity().toString());
-                productQuantityTextField.setDisable(true);
+                fillShipment();
             }
-            case "accepted" -> shipmentStatusLabel.setText("ПРИНЯТАЯ ПОСТАВКА");
+            case "accepted" -> {
+                shipmentStatusLabel.setText("ПРИНЯТАЯ ПОСТАВКА");
+                fillShipment();
+            }
             case "requested" -> {
                 shipmentStatusLabel.setText("ЗАПРОШЕННАЯ ПОСТАВКА");
                 cancelButton.setVisible(true);
+                fillShipment();
             }
             case "rejected" -> {
                 shipmentStatusLabel.setText("ЗАБРАКОВАННАЯ ПОСТАВКА");
                 deleteButton.setVisible(true);
                 resendButton.setVisible(true);
+                fillShipment();
             }
             default -> {
                 shipmentStatusLabel.setText("НОВАЯ ПОСТАВКА");
@@ -87,8 +83,11 @@ public class ClientShipmentHandlerController extends Controller {
                 )
         );
 
-        acceptButton.setOnAction(actionEvent -> handleResponse(service.acceptShipment()));
-        rejectButton.setOnAction(actionEvent -> handleResponse(service.rejectShipment()));
+        acceptButton.setOnAction(actionEvent -> handleResponse(service.updateShipmentStatus("accepted")));
+        rejectButton.setOnAction(actionEvent -> handleResponse(service.updateShipmentStatus("rejected")));
+        resendButton.setOnAction(actionEvent -> handleResponse(service.updateShipmentStatus("requested")));
+        deleteButton.setOnAction(actionEvent -> handleResponse(service.deleteShipment()));
+        cancelButton.setOnAction(actionEvent -> handleResponse(service.deleteShipment()));
     }
 
     private void handleResponse(String response) {
@@ -97,5 +96,18 @@ public class ClientShipmentHandlerController extends Controller {
         } else {
             shipmentStatusLabel.setText("Ошибка");
         }
+    }
+
+    private void fillShipment() {
+        clientListComboBox.setValue(service.getClient().getName());
+        clientListComboBox.setDisable(true);
+        productListComboBox.setValue(
+                service.getProduct(service.getShipment().getProductKey()).getName());
+        productListComboBox.setDisable(true);
+        providerListComboBox.setValue(
+                service.getProvider(service.getShipment().getProviderRegistrationNumber()).getName());
+        providerListComboBox.setDisable(true);
+        productQuantityTextField.setText(service.getShipment().getProductQuantity().toString());
+        productQuantityTextField.setDisable(true);
     }
 }

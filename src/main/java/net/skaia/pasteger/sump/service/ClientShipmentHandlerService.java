@@ -70,18 +70,18 @@ public class ClientShipmentHandlerService {
         return databaseHandler.insertShipment(shipment);
     }
 
-    public String acceptShipment() {
+    public String updateShipmentStatus(String status) {
         try {
-            databaseHandler.updateShipmentStatus(shipment.getNumber(), "accepted");
+            databaseHandler.updateShipmentStatus(shipment.getNumber(), status);
             return "success";
         } catch (Exception exception) {
             return "error";
         }
     }
 
-    public String rejectShipment() {
+    public String deleteShipment() {
         try {
-            databaseHandler.updateShipmentStatus(shipment.getNumber(), "rejected");
+            databaseHandler.deleteShipment(shipment.getNumber());
             return "success";
         } catch (Exception exception) {
             return "error";
