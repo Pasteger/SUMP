@@ -32,15 +32,14 @@ public class ClientRoomController extends Controller {
 
     @FXML
     void initialize() {
-        requestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
+        requestedShipmentsComboBox.setValue(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX);
         arrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
         rejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
         acceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
 
         updateShipmentsComboBoxValue();
 
-        exitButton.setOnAction(actionEvent ->
-                openOtherWindow("authorization", exitButton));
+        exitButton.setOnAction(actionEvent -> openOtherWindow("authorization", exitButton));
 
 
         arrivalsShipmentsComboBox.setOnAction(event ->
@@ -88,11 +87,11 @@ public class ClientRoomController extends Controller {
         requestedShipmentsComboBox.setOnAction(event ->
                 Platform.runLater(() -> {
                     if (requestedShipmentsComboBox.getValue() == null ||
-                            requestedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX))
+                            requestedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX))
                         return;
                     String value = requestedShipmentsComboBox.getValue();
 
-                    requestedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REQUESTED_SHIPMENT_COMBO_BOX);
+                    requestedShipmentsComboBox.setValue(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX);
 
                     service.injectShipment(value);
                     openOtherWindow("client_shipment_handler", requestedShipmentsComboBox);

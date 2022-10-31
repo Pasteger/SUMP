@@ -9,60 +9,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
-            prefWidth="640.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.skaia.pasteger.sump.controller.ProviderRoomController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.skaia.pasteger.sump.controller.ProviderRoomController">
     <ImageView fitHeight="480.0" fitWidth="477.0" layoutX="360.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../image/pouring_milk_0.png"/>
+        <Image url="@../image/pouring_milk_0.png" />
     </ImageView>
-    <ImageView fitHeight="480.0" fitWidth="477.0" layoutX="-199.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true"
-               preserveRatio="true">
-        <Image url="@../image/pouring_milk_0.png"/>
+    <ImageView fitHeight="480.0" fitWidth="477.0" layoutX="-199.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../image/pouring_milk_0.png" />
     </ImageView>
-    <ImageView fitHeight="480.0" fitWidth="477.0" layoutX="82.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../image/shop.png"/>
+    <ImageView fitHeight="446.0" fitWidth="458.0" layoutX="87.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../image/farm.png" />
     </ImageView>
-    <Label alignment="CENTER" layoutX="194.0" layoutY="5.0" prefHeight="57.0" prefWidth="253.0" text="ПОСТАВКИ"
-           textAlignment="CENTER" textFill="#b900e8">
+    <Label alignment="CENTER" layoutX="184.0" layoutY="6.0" prefHeight="57.0" prefWidth="253.0" text="ПОСТАВКИ" textAlignment="CENTER" textFill="#b900e8">
         <font>
-            <Font name="Arial Bold" size="30.0"/>
+            <Font name="Arial Bold" size="28.0" />
         </font>
     </Label>
-    <Button fx:id="exitButton" alignment="CENTER" layoutY="430.0" mnemonicParsing="false" prefHeight="49.0"
-            prefWidth="108.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="выйти"
-            textFill="#355fc9">
+    <Button fx:id="exitButton" alignment="CENTER" layoutY="430.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="108.0" style="-fx-background-color: #e1dfeb; -fx-border-color: #d1d1d1;" text="выйти" textFill="#355fc9">
         <font>
-            <Font name="Garamond" size="24.0"/>
+            <Font name="Garamond" size="24.0" />
         </font>
     </Button>
-    <ComboBox fx:id="requestedShipmentsComboBox" editable="true" focusTraversable="false" layoutX="422.0"
-              layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="200.0"
-              promptText="Запрошенные"
-              style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;"/>
-    <ComboBox fx:id="arrivalsShipmentsComboBox" editable="true" focusTraversable="false" layoutX="422.0"
-              layoutY="65.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="200.0" promptText="Прибывшие"
-              style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;"/>
-    <ComboBox fx:id="acceptedShipmentsComboBox" editable="true" focusTraversable="false" layoutX="14.0"
-              layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="42.0" prefWidth="200.0" promptText="Принятые"
-              style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;"/>
-    <ComboBox fx:id="rejectedShipmentsComboBox" editable="true" focusTraversable="false" layoutX="14.0"
-              layoutY="65.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="42.0" prefWidth="200.0"
-              promptText="Забракованные"
-              style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;">
+    <ComboBox fx:id="responsedShipmentsComboBox" editable="true" focusTraversable="false" layoutX="14.0" layoutY="13.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="42.0" prefWidth="200.0" promptText="Отправленные" style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;" />
+    <ComboBox fx:id="requestedShipmentsComboBox" editable="true" focusTraversable="false" layoutX="422.0" layoutY="13.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="200.0" promptText="Запрошенные" style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;" />
+    <ComboBox fx:id="freeShipmentsComboBox" editable="true" focusTraversable="false" layoutX="14.0" layoutY="65.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="42.0" prefWidth="200.0" promptText="Свободные" style="-fx-background-color: #e1dfeb; -fx-text-fill: #871094; -fx-font-family: Garamond; -fx-font-size: 20;" visible="false">
         <cursor>
-            <Cursor fx:constant="DEFAULT"/>
+            <Cursor fx:constant="DEFAULT" />
         </cursor>
     </ComboBox>
-    <ImageView fx:id="arrivalsRequestedShipmentsImageView" fitHeight="42.0" fitWidth="37.0" layoutX="385.0"
-               layoutY="68.0" pickOnBounds="true" preserveRatio="true" visible="false">
-        <Image url="@../image/time_gears.gif"/>
+    <ImageView fx:id="arrivalsRequestedShipmentsImageView" fitHeight="42.0" fitWidth="37.0" layoutX="385.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <Image url="@../image/time_gears.gif" />
     </ImageView>
-    <ImageView fx:id="updateShipmentsImageView" fitHeight="119.0" fitWidth="117.0" layoutX="522.0" layoutY="361.0"
-               pickOnBounds="true" preserveRatio="true">
-        <Image url="@../image/epitrochoid.gif"/>
+    <ImageView fx:id="updateShipmentsImageView" fitHeight="119.0" fitWidth="117.0" layoutX="522.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../image/epitrochoid.gif" />
     </ImageView>
-    <ImageView fitHeight="100.0" fitWidth="165.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true"
-               preserveRatio="true"/>
-    <ImageView fitHeight="100.0" fitWidth="163.0" layoutX="459.0" layoutY="10.0" pickOnBounds="true"
-               preserveRatio="true"/>
+    <ImageView fitHeight="100.0" fitWidth="165.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fitHeight="100.0" fitWidth="163.0" layoutX="459.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
 </AnchorPane>

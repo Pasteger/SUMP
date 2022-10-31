@@ -132,12 +132,12 @@ public class DatabaseHandler {
     }
 
 
-    public ObservableList<Shipment> getShipmentList(Long clientRegistrationNumber) {
+    public ObservableList<Shipment> getShipmentList(Long registrationNumber, String entityRegistrationNumberString) {
         ObservableList<Shipment> shipments = FXCollections.observableArrayList();
         try {
-            String request = "select * from shipment where client_registration_number = ?";
+            String request = "select * from shipment where " + entityRegistrationNumberString + " = ?";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
-            preparedStatement.setLong(1, clientRegistrationNumber);
+            preparedStatement.setLong(1, registrationNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Shipment shipment = new Shipment();
@@ -199,9 +199,29 @@ public class DatabaseHandler {
             return providerList;
         }
     }
+    public ObservableList<Client> getClientList() {
+        ObservableList<Client> clientList = FXCollections.observableArrayList();
+        try {
+            String request = "select * from client";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Client client = new Client();
+                client.setClientRegistrationNumber(resultSet.getLong("client_registration_number"));
+                client.setName(resultSet.getString("name"));
+                client.setAddress(resultSet.getString("address"));
+                client.setPhoneNumber(resultSet.getString("phone_number"));
+
+                clientList.add(client);
+            }
+            return clientList;
+        } catch (SQLException e) {
+            return clientList;
+        }
+    }
 
     public void updateShipmentStatus(Long number, String status) throws SQLException {
-        String request = "update shipment set status  = ? where number = ?";
+        String request = "update shipment set status = ? where number = ?";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(request);
         preparedStatement.setString(1, status);
         preparedStatement.setLong(2, number);

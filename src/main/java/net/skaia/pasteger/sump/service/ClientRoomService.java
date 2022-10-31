@@ -104,6 +104,7 @@ public class ClientRoomService {
     }
 
     private void setShipmentList() {
-        shipmentList = databaseHandler.getShipmentList(client.getClientRegistrationNumber());
+        shipmentList = databaseHandler.getShipmentList(
+                client.getClientRegistrationNumber(), "client_registration_number");
     }
 }
