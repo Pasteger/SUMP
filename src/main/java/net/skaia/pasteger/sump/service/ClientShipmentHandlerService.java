@@ -88,6 +88,20 @@ public class ClientShipmentHandlerService {
         }
     }
 
+    public Product getProduct(Long key) {
+        setProductList();
+        Optional<Product> productOptional = productList.stream().filter(product ->
+                Objects.equals(product.getProductKey(), key)).findFirst();
+        return productOptional.orElse(null);
+    }
+
+    public Provider getProvider(Long providerRegistrationNumber) {
+        setProviderList();
+        Optional<Provider> providerOptional = providerList.stream().filter(provider ->
+                Objects.equals(provider.getProviderRegistrationNumber(), providerRegistrationNumber)).findFirst();
+        return providerOptional.orElse(null);
+    }
+
     public void setClient(Client client) {
         this.client = client;
     }
@@ -124,19 +138,5 @@ public class ClientShipmentHandlerService {
 
     private void setProductList() {
         this.productList = databaseHandler.getProductList();
-    }
-
-    public Product getProduct(Long key) {
-        setProductList();
-        Optional<Product> productOptional = productList.stream().filter(product ->
-                Objects.equals(product.getProductKey(), key)).findFirst();
-        return productOptional.orElse(null);
-    }
-
-    public Provider getProvider(Long providerRegistrationNumber) {
-        setProviderList();
-        Optional<Provider> providerOptional = providerList.stream().filter(provider ->
-                Objects.equals(provider.getProviderRegistrationNumber(), providerRegistrationNumber)).findFirst();
-        return providerOptional.orElse(null);
     }
 }

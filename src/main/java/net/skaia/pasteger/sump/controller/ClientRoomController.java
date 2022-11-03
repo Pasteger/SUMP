@@ -39,66 +39,35 @@ public class ClientRoomController extends Controller {
 
         updateShipmentsComboBoxValue();
 
-        exitButton.setOnAction(actionEvent -> openOtherWindow("authorization", exitButton));
+        arrivalsShipmentsComboBox.setOnAction(actionEvent ->
+                actionEventForComboBoxes(arrivalsShipmentsComboBox, DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX));
 
+        rejectedShipmentsComboBox.setOnAction(actionEvent ->
+                actionEventForComboBoxes(rejectedShipmentsComboBox, DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX));
 
-        arrivalsShipmentsComboBox.setOnAction(event ->
-            Platform.runLater(() -> {
-                if (arrivalsShipmentsComboBox.getValue() == null ||
-                        arrivalsShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX))
-                    return;
-                String value = arrivalsShipmentsComboBox.getValue();
+        acceptedShipmentsComboBox.setOnAction(actionEvent ->
+                actionEventForComboBoxes(acceptedShipmentsComboBox, DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX));
 
-                arrivalsShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ARRIVALS_SHIPMENT_COMBO_BOX);
-
-                service.injectShipment(value);
-                openOtherWindow("client_shipment_handler", arrivalsShipmentsComboBox);
-            })
-        );
-
-        rejectedShipmentsComboBox.setOnAction(event ->
-                Platform.runLater(() -> {
-                    if (rejectedShipmentsComboBox.getValue() == null ||
-                            rejectedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX))
-                        return;
-                    String value = rejectedShipmentsComboBox.getValue();
-
-                    rejectedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_REJECTED_ARRIVALS_SHIPMENT_COMBO_BOX);
-
-                    service.injectShipment(value);
-                    openOtherWindow("client_shipment_handler", rejectedShipmentsComboBox);
-                })
-        );
-
-        acceptedShipmentsComboBox.setOnAction(event ->
-                Platform.runLater(() -> {
-                    if (acceptedShipmentsComboBox.getValue() == null ||
-                            acceptedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX))
-                        return;
-                    String value = acceptedShipmentsComboBox.getValue();
-
-                    acceptedShipmentsComboBox.setValue(DEFAULT_VALUE_CLIENT_ACCEPTED_SHIPMENT_COMBO_BOX);
-
-                    service.injectShipment(value);
-                    openOtherWindow("client_shipment_handler", acceptedShipmentsComboBox);
-                })
-        );
-
-        requestedShipmentsComboBox.setOnAction(event ->
-                Platform.runLater(() -> {
-                    if (requestedShipmentsComboBox.getValue() == null ||
-                            requestedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX))
-                        return;
-                    String value = requestedShipmentsComboBox.getValue();
-
-                    requestedShipmentsComboBox.setValue(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX);
-
-                    service.injectShipment(value);
-                    openOtherWindow("client_shipment_handler", requestedShipmentsComboBox);
-                })
-        );
+        requestedShipmentsComboBox.setOnAction(actionEvent ->
+                actionEventForComboBoxes(requestedShipmentsComboBox, DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX));
 
         updateShipmentsImageView.setOnMouseClicked(mouseEvent -> updateShipmentsComboBoxValue());
+        exitButton.setOnAction(actionEvent -> openOtherWindow("authorization", exitButton));
+    }
+
+    //Такой же метод находится в ProviderRoomController и я не знаю, как это оптимизировать
+    private void actionEventForComboBoxes(ComboBox<String> comboBox, String constant) {
+        Platform.runLater(() -> {
+            if (comboBox.getValue() == null ||
+                    comboBox.getValue().equals(constant))
+                return;
+            String value = comboBox.getValue();
+
+            comboBox.setValue(constant);
+
+            service.injectShipment(value);
+            openOtherWindow("client_shipment_handler", comboBox);
+        });
     }
 
     private void updateShipmentsComboBoxValue() {
@@ -106,10 +75,10 @@ public class ClientRoomController extends Controller {
             EventHandler<ActionEvent> handler = arrivalsShipmentsComboBox.getOnAction();
             arrivalsShipmentsComboBox.setOnAction(null);
 
-            requestedShipmentsComboBox.setItems(service.getRequestedShipments());
-            acceptedShipmentsComboBox.setItems(service.getAcceptedShipments());
-            arrivalsShipmentsComboBox.setItems(service.getArrivalsShipments());
-            rejectedShipmentsComboBox.setItems(service.getRejectedShipments());
+            requestedShipmentsComboBox.setItems(service.getShipmentsForType("requested"));
+            acceptedShipmentsComboBox.setItems(service.getShipmentsForType("accepted"));
+            arrivalsShipmentsComboBox.setItems(service.getShipmentsForType("arrivals"));
+            rejectedShipmentsComboBox.setItems(service.getShipmentsForType("rejected"));
 
             arrivalsShipmentsComboBox.setOnAction(handler);
 

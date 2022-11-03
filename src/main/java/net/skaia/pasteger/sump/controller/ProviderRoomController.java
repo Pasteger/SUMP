@@ -36,35 +36,28 @@ public class ProviderRoomController extends Controller {
         updateShipmentsComboBoxValue();
 
         responsedShipmentsComboBox.setOnAction(event ->
-                Platform.runLater(() -> {
-                    if (responsedShipmentsComboBox.getValue() == null ||
-                            responsedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_PROVIDER_RESPONSED_SHIPMENT_COMBO_BOX))
-                        return;
-                    String value = responsedShipmentsComboBox.getValue();
-
-                    responsedShipmentsComboBox.setValue(DEFAULT_VALUE_PROVIDER_RESPONSED_SHIPMENT_COMBO_BOX);
-
-                    service.injectShipment(value);
-                    openOtherWindow("provider_shipment_handler", responsedShipmentsComboBox);
-                })
-        );
+                actionEventForComboBoxes(responsedShipmentsComboBox, DEFAULT_VALUE_PROVIDER_RESPONSED_SHIPMENT_COMBO_BOX));
 
         requestedShipmentsComboBox.setOnAction(event ->
-                Platform.runLater(() -> {
-                    if (requestedShipmentsComboBox.getValue() == null ||
-                            requestedShipmentsComboBox.getValue().equals(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX))
-                        return;
-                    String value = requestedShipmentsComboBox.getValue();
-
-                    requestedShipmentsComboBox.setValue(DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX);
-
-                    service.injectShipment(value);
-                    openOtherWindow("provider_shipment_handler", requestedShipmentsComboBox);
-                })
-        );
+                actionEventForComboBoxes(requestedShipmentsComboBox, DEFAULT_VALUE_REQUESTED_SHIPMENT_COMBO_BOX));
 
         updateShipmentsImageView.setOnMouseClicked(mouseEvent -> updateShipmentsComboBoxValue());
         exitButton.setOnAction(actionEvent -> openOtherWindow("authorization", exitButton));
+    }
+
+    //Такой же метод находится в ClientRoomController и я не знаю, как это оптимизировать
+    private void actionEventForComboBoxes(ComboBox<String> comboBox, String constant) {
+        Platform.runLater(() -> {
+            if (comboBox.getValue() == null ||
+                    comboBox.getValue().equals(constant))
+                return;
+            String value = comboBox.getValue();
+
+            comboBox.setValue(constant);
+
+            service.injectShipment(value);
+            openOtherWindow("client_shipment_handler", comboBox);
+        });
     }
 
     private void updateShipmentsComboBoxValue() {
@@ -72,8 +65,8 @@ public class ProviderRoomController extends Controller {
             EventHandler<ActionEvent> handler = requestedShipmentsComboBox.getOnAction();
             requestedShipmentsComboBox.setOnAction(null);
 
-            requestedShipmentsComboBox.setItems(service.getRequestedShipments());
-            responsedShipmentsComboBox.setItems(service.getResponsedShipments());
+            requestedShipmentsComboBox.setItems(service.getShipmentsForType("requested"));
+            responsedShipmentsComboBox.setItems(service.getShipmentsForType("responsed"));
 
             requestedShipmentsComboBox.setOnAction(handler);
 

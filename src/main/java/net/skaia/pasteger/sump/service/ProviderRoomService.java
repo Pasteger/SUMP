@@ -19,45 +19,30 @@ public class ProviderRoomService {
     }
 
     private final DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-    ProviderShipmentHandlerService providerShipmentHandlerService = ProviderShipmentHandlerService.getInstance();
+    private final ProviderShipmentHandlerService providerShipmentHandlerService = ProviderShipmentHandlerService.getInstance();
 
     private Provider provider;
     private ObservableList<Shipment> shipmentList;
+    private Long refreshTime;
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
+    public ObservableList<String> getShipmentsForType(String type) {
+        ObservableList<String> shipmentStringList = FXCollections.observableArrayList();
 
-    public ObservableList<String> getRequestedShipments() {
-        setShipmentList();
+        if (System.currentTimeMillis() - refreshTime > 10000) {
+            setShipmentList();
+            refreshTime = System.currentTimeMillis();
+        }
 
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-
-        shipmentList.filtered(shipment -> shipment.getStatus().equals("requested")).forEach(shipment ->
-                requestedShipmentStringList.add(
+        shipmentList.filtered(shipment ->
+                type.equals("requested") == shipment.getStatus().equals("requested")).forEach(shipment ->
+                shipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
                                 shipment.getProductQuantity() + " "
                 )
         );
 
-        return requestedShipmentStringList;
-    }
-
-    public ObservableList<String> getResponsedShipments() {
-        setShipmentList();
-
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-
-        shipmentList.filtered(shipment -> !shipment.getStatus().equals("requested")).forEach(shipment ->
-                requestedShipmentStringList.add(
-                        shipment.getNumber() + " " +
-                                shipment.getProductKey() + " " +
-                                shipment.getProductQuantity() + " "
-                )
-        );
-
-        return requestedShipmentStringList;
+        return shipmentStringList;
     }
 
     private void setShipmentList() {
@@ -72,5 +57,9 @@ public class ProviderRoomService {
 
         providerShipmentHandlerService.setProvider(provider);
         providerShipmentHandlerService.setShipment(shipment);
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 }

@@ -22,12 +22,8 @@ public class DatabaseHandler {
         String connectionString = "jdbc:postgresql://localhost:5432/sump";
         try {
             Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             dbConnection = DriverManager.getConnection(connectionString, DATABASE_USER, DATABASE_PASSWORD);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -199,6 +195,7 @@ public class DatabaseHandler {
             return providerList;
         }
     }
+
     public ObservableList<Client> getClientList() {
         ObservableList<Client> clientList = FXCollections.observableArrayList();
         try {

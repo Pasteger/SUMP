@@ -19,68 +19,33 @@ public class ClientRoomService {
     }
 
     private final DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-    ClientShipmentHandlerService clientShipmentHandlerService = ClientShipmentHandlerService.getInstance();
+    private final ClientShipmentHandlerService clientShipmentHandlerService = ClientShipmentHandlerService.getInstance();
 
     private Client client;
     private ObservableList<Shipment> shipmentList;
+    private long refreshTime;
 
-    public ObservableList<String> getRequestedShipments() {
-        setShipmentList();
+    public ObservableList<String> getShipmentsForType(String type) {
+        ObservableList<String> shipmentStringList = FXCollections.observableArrayList();
 
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-        requestedShipmentStringList.add("Новая");
+        if (System.currentTimeMillis() - refreshTime > 10000) {
+            setShipmentList();
+            refreshTime = System.currentTimeMillis();
+        }
 
-        shipmentList.filtered(shipment -> shipment.getStatus().equals("requested")).forEach(shipment ->
-                requestedShipmentStringList.add(
+        if (type.equals("requested")) {
+            shipmentStringList.add("Новая");
+        }
+
+        shipmentList.filtered(shipment -> shipment.getStatus().equals(type)).forEach(shipment ->
+                shipmentStringList.add(
                         shipment.getNumber() + " " +
                                 shipment.getProductKey() + " " +
                                 shipment.getProductQuantity() + " "
                 )
         );
 
-        return requestedShipmentStringList;
-    }
-
-    public ObservableList<String> getAcceptedShipments() {
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-
-        shipmentList.filtered(shipment -> shipment.getStatus().equals("accepted")).forEach(shipment ->
-                requestedShipmentStringList.add(
-                        shipment.getNumber() + " " +
-                                shipment.getProductKey() + " " +
-                                shipment.getProductQuantity() + " "
-                )
-        );
-
-        return requestedShipmentStringList;
-    }
-
-    public ObservableList<String> getArrivalsShipments() {
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-
-        shipmentList.filtered(shipment -> shipment.getStatus().equals("arrivals")).forEach(shipment ->
-                requestedShipmentStringList.add(
-                        shipment.getNumber() + " " +
-                                shipment.getProductKey() + " " +
-                                shipment.getProductQuantity() + " "
-                )
-        );
-
-        return requestedShipmentStringList;
-    }
-
-    public ObservableList<String> getRejectedShipments() {
-        ObservableList<String> requestedShipmentStringList = FXCollections.observableArrayList();
-
-        shipmentList.filtered(shipment -> shipment.getStatus().equals("rejected")).forEach(shipment ->
-                requestedShipmentStringList.add(
-                        shipment.getNumber() + " " +
-                                shipment.getProductKey() + " " +
-                                shipment.getProductQuantity() + " "
-                )
-        );
-
-        return requestedShipmentStringList;
+        return shipmentStringList;
     }
 
     public void injectShipment(String stringShipment) {
@@ -99,12 +64,12 @@ public class ClientRoomService {
         clientShipmentHandlerService.setShipment(shipment);
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     private void setShipmentList() {
         shipmentList = databaseHandler.getShipmentList(
                 client.getClientRegistrationNumber(), "client_registration_number");
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

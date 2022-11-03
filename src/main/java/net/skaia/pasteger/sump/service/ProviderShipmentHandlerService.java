@@ -27,16 +27,13 @@ public class ProviderShipmentHandlerService {
     private Shipment shipment;
     private Provider provider;
 
-    public void setShipment(Shipment shipment) {
-        this.shipment = shipment;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
-
-    public Shipment getShipment() {
-        return shipment;
+    public String sendShipment() {
+        try {
+            databaseHandler.updateShipmentStatus(shipment.getNumber(), "arrivals");
+            return "success";
+        } catch (Exception exception) {
+            return "error";
+        }
     }
 
     public Product getProduct(Long key) {
@@ -53,13 +50,16 @@ public class ProviderShipmentHandlerService {
         return clientOptional.orElse(null);
     }
 
-    public String sendShipment() {
-        try {
-            databaseHandler.updateShipmentStatus(shipment.getNumber(), "arrivals");
-            return "success";
-        } catch (Exception exception) {
-            return "error";
-        }
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public Shipment getShipment() {
+        return shipment;
     }
 
     public Provider getProvider() {

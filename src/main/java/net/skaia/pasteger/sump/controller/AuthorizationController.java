@@ -26,7 +26,7 @@ public class AuthorizationController extends Controller {
 
     @FXML
     void initialize() {
-        //mediaPlayer.play();
+        mediaPlayer.play();
 
         registrationButton.setOnAction(actionEvent -> {
             loginTextField.setText("");
