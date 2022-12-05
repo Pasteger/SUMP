@@ -56,7 +56,7 @@ public class ProviderRoomController extends Controller {
             comboBox.setValue(constant);
 
             service.injectShipment(value);
-            openOtherWindow("client_shipment_handler", comboBox);
+            openOtherWindow("provider_shipment_handler", comboBox);
         });
     }
 

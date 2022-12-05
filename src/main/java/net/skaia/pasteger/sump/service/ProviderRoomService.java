@@ -23,7 +23,7 @@ public class ProviderRoomService {
 
     private Provider provider;
     private ObservableList<Shipment> shipmentList;
-    private Long refreshTime;
+    private long refreshTime;
 
     public ObservableList<String> getShipmentsForType(String type) {
         ObservableList<String> shipmentStringList = FXCollections.observableArrayList();
